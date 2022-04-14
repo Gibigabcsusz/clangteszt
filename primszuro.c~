@@ -2,23 +2,38 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
+typedef struct elem {
+	int val;
+	elem* kovi;
+}elem_t;
+
 int main(){
-	bool prim;
+	bool lehetPrim;
 	int hatar;
-	int counter=0;
-	printf("Határ: ");
+	int counter=1;
+	elem_t* aktualElemPtr;
+
+	elem_t* fej=NULL; // linkelt lista feje
+	fejPtr = (elem_t*) malloc(sizeof(elem_t));
+
+	printf("Határ: "); // felső határérték beolvasása
 	scanf("%d",&hatar);
-	printf("\n\nprímek:\n\n");
+
+	printf("\n\nPrímek %d-ig:\n\n", &hatar); // prímek felsorolása
+	if(hatar > 1)
+		printf("1.  2\n");
+
 	for(int i=3; i<hatar; i+=2){
-		prim=true;
-		for(int j=2;j<i;j++){
-			if(i%j==0)
-				prim=false;
+		lehetPrim=true;
+		aktualElemPtr = fejPtr;
+		while(aktualElemPtr != NULL && lehetPrim){
+			
 		}
-		if(prim){
+		if(lehetPrim){
 			counter++;
 			printf("%d.  %d\n",counter,i);
 		}
 	}
+	free(fej);
 	return 0;
 }
