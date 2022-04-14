@@ -30,17 +30,11 @@ void felszabadit(elem_t* fej){
 // bemenete egy láncolt lista farka és a hozzáfűzendő elem
 // kimenete a hozzáfűzés utáni farok
 elem_t* hozzafuz(elem_t* farok, int ujErtek){
-	if(farok==NULL){
-		printf("Nem fűzök hozzá nullpointerhez!\n");
-		return NULL;
-	}
-	else{
-		farok->kovetkezo = (elem_t*)malloc(sizeof(elem_t));
-		farok->kovetkezo->elozo = farok;
-		farok->kovetkezo->kovetkezo = NULL;
-		farok = farok->kovetkezo;
-		return farok;
-	}
+	farok->kovetkezo = (elem_t*)malloc(sizeof(elem_t));
+	farok->kovetkezo->elozo = farok;
+	farok->kovetkezo->kovetkezo = NULL;
+	farok = farok->kovetkezo;
+	return farok;
 }
 
 int main(){
@@ -52,25 +46,29 @@ int main(){
 	
 	// linkelt lista feje és farka, vagyis első és utolsó eleme
 	felem_t* fejPtr, farokPtr;
-       	fejPtr = (elem_t*) malloc(sizeof(elem_t));
+       	fejPtr = hozzafuz((elem_t*)NULL, 2);
 	farokPtr = fejPtr;
 	
 	printf("Határ: "); // felső határérték beolvasása
 	szemet = (void)scanf("%d",&hatar);
 
 	printf("\n\nPrímek %d-ig:\n\n", &hatar); // prímek felsorolása
-	if(hatar > 1)
-		printf("1.  2\n");
 
 	for(int i=3; i<hatar; i+=2){
-		lehetPrim=true;
+		lehetPrim = true;
 		aktualElemPtr = fejPtr;
 		while(aktualElemPtr != NULL && lehetPrim){
-			
-			aktualElemPtr = aktualElemPtr->kovi;
+			if(i % aktualElemPtr->ertek == 0){
+				lehetPrim = false;
+			}
+			else{
+				aktualElemPtr = aktualElemPtr->kovi;
+			}
 		}
+		// ha prím a vizsgált szám
 		if(lehetPrim){
 			counter++;
+			farokPtr = hozzafuz(farokPtr, i);
 			printf("%d.  %d\n",counter,i);
 		}
 	}
